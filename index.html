@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ログイン – Minecraft 掲示板</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>ログイン</h2>
+    <input id="email" type="email" placeholder="メールアドレス">
+    <input id="password" type="password" placeholder="パスワード">
+    <button id="btn-login">ログイン</button>
+    <button id="btn-google">Google でログイン</button>
+    <p><a href="register.html">新規登録はこちら</a></p>
+    <p><a href="#" id="btn-reset">パスワードを忘れた方</a></p>
+  </div>
+  <script>
+    import { loginWithEmail, loginWithGoogle, resetPassword } from './js/auth.js';
+    document.getElementById('btn-login').onclick = () =>
+      loginWithEmail(email.value, password.value);
+    document.getElementById('btn-google').onclick = () =>
+      loginWithGoogle();
+    document.getElementById('btn-reset').onclick = () =>
+      resetPassword(prompt('登録済みメールアドレスを入力してください'));
+  </script>
+</body>
+</html>
