@@ -1,0 +1,46 @@
+/* メニューバー */
+.menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2e3b4e;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-categories {
+  display: flex;
+  gap: 15px;
+}
+
+.menu-categories a {
+  color: white;
+  text-decoration: none;
+}
+
+.user-menu {
+  color: white;
+  cursor: pointer;
+}
+
+/* ドロップダウンメニュー */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 120px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
