@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ログイン - Minecraft Forum</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="menu-bar">
+    <div class="logo">Minecraft Forum</div>
+  </div>
+
+  <div style="padding: 20px;">
+    <h2>ログイン</h2>
+    <input type="email" id="email" placeholder="メールアドレス"><br>
+    <input type="password" id="password" placeholder="パスワード"><br>
+    <button onclick="login()">ログイン</button>
+    <p>アカウントがない方は <a href="register.html">こちら</a></p>
+  </div>
+
+  <script src="firebase-config.js"></script>
+  <script>
+    function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          const user = userCredential.user;
+          if (!user.emailVerified) {
+            alert('メール認証を行ってください');
+            user.sendEmailVerification();
+          } else if (!user.displayName) {
+            location.href = 'set-username.html';
+          } else {
+            location.href = 'index.html';
+          }
+        })
+        .catch(error => {
+          alert(error.message);
+        });
+    }
+
+    // Googleログイン
+    function googleLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          if (!user.displayName) {
+            location.href = 'set-username.html';
+          } else {
+            location.href = 'index.html';
+          }
+        });
+    }
+  </script>
+</body>
+</html>
