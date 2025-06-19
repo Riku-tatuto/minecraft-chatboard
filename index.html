@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>マインクラフト掲示板</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Minecraft掲示板</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- メニューバー -->
-  <div class="menu-bar">
-    <div class="logo">Minecraft Forum</div>
-    <div class="menu-categories">
-      <a href="#">バニラ</a>
-      <a href="#">マルチ募集</a>
-      <a href="#">レッドストーン関連</a>
-      <div class="dropdown">
-        <a>プラグイン/mod関連</a>
-        <div class="dropdown-content">
-          <a href="#">プラグイン関連</a>
-          <a href="#">mod関連</a>
+    <header>
+        <div class="menu-bar">
+            <div class="logo">🎮 Minecraft Forum</div>
+            <nav class="categories">
+                <a href="#">バニラ</a>
+                <a href="#">マルチ募集</a>
+                <a href="#">レッドストーン</a>
+                <div class="dropdown">
+                    <a>プラグイン/mod</a>
+                    <div class="dropdown-content">
+                        <a href="#">プラグイン</a>
+                        <a href="#">mod</a>
+                    </div>
+                </div>
+                <a href="#">コマンド</a>
+            </nav>
+            <div class="user-menu">
+                <span id="user-name">ゲスト</span>
+                <div class="dropdown-content">
+                    <a href="#">パスワード変更</a>
+                    <a href="#">ユーザー名変更</a>
+                    <a href="#">ログアウト</a>
+                </div>
+            </div>
         </div>
-      </div>
-      <a href="#">コマンド関連</a>
-    </div>
-    <div class="user-menu" id="userMenu">ゲスト</div>
-  </div>
+    </header>
 
-  <!-- ホームコンテンツ -->
-  <div style="padding: 20px;">
-    <h1>ようこそ！</h1>
-    <p>左上のメニューバーからカテゴリを選択してください。</p>
-  </div>
+    <main>
+        <div class="category-grid">
+            <div class="category-card">バニラ <span class="count">(0)</span></div>
+            <div class="category-card">マルチ募集 <span class="count">(0)</span></div>
+            <div class="category-card">レッドストーン <span class="count">(0)</span></div>
+            <div class="category-card">プラグイン <span class="count">(0)</span></div>
+            <div class="category-card">mod <span class="count">(0)</span></div>
+            <div class="category-card">コマンド <span class="count">(0)</span></div>
+        </div>
+    </main>
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script> 
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script> 
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script> 
-  <script src="firebase-config.js"></script>
-  <script>
-    // ユーザー情報表示
-    firebase.auth().onAuthStateChanged(user => {
-      const userMenu = document.getElementById('userMenu');
-      if (user) {
-        userMenu.textContent = user.displayName || 'ユーザー';
-      } else {
-        userMenu.textContent = 'ログイン';
-        userMenu.onclick = () => location.href = 'login.html';
-      }
-    });
-  </script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script> 
+    <script src="firebase-config.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
