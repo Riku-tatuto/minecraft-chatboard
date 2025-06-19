@@ -1,71 +1,64 @@
+/* 共通スタイル */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f0f0f0;
+}
+
 /* メニューバー */
-.menu-bar {
+.navbar {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    background: #2c2f33;
+    background: #2c3e50;
     color: white;
     padding: 0.5em 1em;
 }
 
 .logo {
     font-size: 1.5em;
-    margin-right: 2em;
     cursor: pointer;
 }
 
-.categories {
-    display: flex;
-    gap: 1em;
-    flex-grow: 1;
-}
-
-.categories a {
+.menu a {
     color: white;
     text-decoration: none;
+    margin: 0 1em;
     position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 120px;
+    z-index: 1;
+    color: black;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background: #2c2f33;
-    min-width: 120px;
-    z-index: 1;
-    padding: 0.5em;
-}
-
 .user-menu {
-    position: relative;
     cursor: pointer;
 }
 
-/* カテゴリグリッド */
-.category-grid {
+/* ホームボタン */
+.home-buttons {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1em;
     padding: 2em;
 }
 
-.category-card {
-    background: #f0f0f0;
-    padding: 1.5em;
+.home-buttons a {
+    background: white;
+    padding: 1em;
     text-align: center;
     border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.category-card:hover {
-    background: #e0e0e0;
-}
-
-.count {
-    color: #666;
-    font-size: 0.8em;
-    margin-left: 0.5em;
+    text-decoration: none;
+    color: #2c3e50;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
