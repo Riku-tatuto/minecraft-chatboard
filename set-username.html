@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ユーザー名設定 - Minecraft Forum</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="menu-bar">
+    <div class="logo">Minecraft Forum</div>
+  </div>
+
+  <div style="padding: 20px;">
+    <h2>ユーザー名を設定してください</h2>
+    <input type="text" id="username" placeholder="ユーザー名"><br>
+    <button onclick="saveUsername()">保存</button>
+  </div>
+
+  <script src="firebase-config.js"></script>
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) location.href = 'login.html';
+    });
+
+    function saveUsername() {
+      const username = document.getElementById('username').value;
+      const user = firebase.auth().currentUser;
+      
+      // ユーザー名の重複チェック
+      firebase.database().ref('users')
+        .orderByChild('username')
+        .equalTo(username)
+        .once('value')
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            alert('このユーザー名はすでに使用されています');
+            return;
+          }
+
+          // ユーザー名をFirebaseに保存
+          user.updateProfile({ displayName: username });
+          firebase.database().ref('users/' + user.uid).set({
+            email: user.email,
+            username: username,
+            createdAt: new Date().toISOString()
+          });
+
+          location.href = 'index.html';
+        });
+    }
+  </script>
+</body>
+</html>
