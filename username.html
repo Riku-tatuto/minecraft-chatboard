@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ユーザー名設定</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>ユーザー名を設定してください</h1>
+    <form id="username-form">
+        <input type="text" id="username" placeholder="ユーザー名" required>
+        <button type="submit">保存</button>
+    </form>
+
+    <script src="firebase-config.js"></script>
+    <script>
+        firebase.auth().onAuthStateChanged(async user => {
+            if (!user || !user.emailVerified) return;
+
+            document.getElementById('username-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+
+                try {
+                    // ユーザー名重複チェック
+                    const snapshot = await firebase.database().ref('usernames').child(username).once('value');
+                    if (snapshot.exists()) {
+                        alert('このユーザー名はすでに使われています');
+                        return;
+                    }
+
+                    // ユーザー名を設定
+                    await user.updateProfile({ displayName: username });
+                    await firebase.database().ref('usernames').child(username).set(user.uid);
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
