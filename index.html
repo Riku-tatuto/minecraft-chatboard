@@ -1,32 +1,50 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>ログイン – Minecraft 掲示板</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js"></script>
-  <script src="js/firebase-config.js"></script>
-  <script type="module" src="js/auth.js"></script>
+  <title>マインクラフト掲示板</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h2>ログイン</h2>
-    <input id="email" type="email" placeholder="メールアドレス">
-    <input id="password" type="password" placeholder="パスワード">
-    <button id="btn-login">ログイン</button>
-    <button id="btn-google">Google でログイン</button>
-    <p><a href="register.html">新規登録はこちら</a></p>
-    <p><a href="#" id="btn-reset">パスワードを忘れた方</a></p>
+  <!-- メニューバー -->
+  <div class="menu-bar">
+    <div class="logo">Minecraft Forum</div>
+    <div class="menu-categories">
+      <a href="#">バニラ</a>
+      <a href="#">マルチ募集</a>
+      <a href="#">レッドストーン関連</a>
+      <div class="dropdown">
+        <a>プラグイン/mod関連</a>
+        <div class="dropdown-content">
+          <a href="#">プラグイン関連</a>
+          <a href="#">mod関連</a>
+        </div>
+      </div>
+      <a href="#">コマンド関連</a>
+    </div>
+    <div class="user-menu" id="userMenu">ゲスト</div>
   </div>
+
+  <!-- ホームコンテンツ -->
+  <div style="padding: 20px;">
+    <h1>ようこそ！</h1>
+    <p>左上のメニューバーからカテゴリを選択してください。</p>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script> 
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script> 
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script> 
+  <script src="firebase-config.js"></script>
   <script>
-    import { loginWithEmail, loginWithGoogle, resetPassword } from './js/auth.js';
-    document.getElementById('btn-login').onclick = () =>
-      loginWithEmail(email.value, password.value);
-    document.getElementById('btn-google').onclick = () =>
-      loginWithGoogle();
-    document.getElementById('btn-reset').onclick = () =>
-      resetPassword(prompt('登録済みメールアドレスを入力してください'));
+    // ユーザー情報表示
+    firebase.auth().onAuthStateChanged(user => {
+      const userMenu = document.getElementById('userMenu');
+      if (user) {
+        userMenu.textContent = user.displayName || 'ユーザー';
+      } else {
+        userMenu.textContent = 'ログイン';
+        userMenu.onclick = () => location.href = 'login.html';
+      }
+    });
   </script>
 </body>
 </html>
