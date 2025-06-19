@@ -1,53 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>新規登録 - Minecraft Forum</title>
-  <link rel="stylesheet" href="style.css">
+    <title>新規登録</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="menu-bar">
-    <div class="logo">Minecraft Forum</div>
-  </div>
+    <h1>新規登録</h1>
+    <form id="register-form">
+        <input type="email" id="email" placeholder="メールアドレス" required>
+        <input type="password" id="password" placeholder="パスワード" required>
+        <input type="password" id="confirm-password" placeholder="パスワード再入力" required>
+        <button type="submit">登録</button>
+    </form>
 
-  <div style="padding: 20px;">
-    <h2>新規登録</h2>
-    <input type="email" id="email" placeholder="メールアドレス"><br>
-    <input type="password" id="password" placeholder="パスワード"><br>
-    <input type="password" id="confirm" placeholder="パスワード再入力"><br>
-    <button onclick="register()">登録</button>
-    <p><a href="#" onclick="googleLogin()">Googleで登録</a></p>
-  </div>
+    <script src="firebase-config.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
 
-  <script src="firebase-config.js"></script>
-  <script>
-    function register() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const confirm = document.getElementById('confirm').value;
+            if (password !== confirmPassword) {
+                alert('パスワードが一致しません');
+                return;
+            }
 
-      if (password !== confirm) {
-        alert('パスワードが一致しません');
-        return;
-      }
-
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(userCredential => {
-          userCredential.user.sendEmailVerification();
-          alert('メール認証リンクを送信しました');
-          location.href = 'set-username.html';
-        })
-        .catch(error => {
-          alert(error.message);
+            try {
+                const {user} = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                await user.sendEmailVerification();
+                window.location.href = 'username.html';
+            } catch (error) {
+                alert(error.message);
+            }
         });
-    }
-
-    function googleLogin() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider)
-        .then(result => {
-          location.href = 'set-username.html';
-        });
-    }
-  </script>
+    </script>
 </body>
 </html>
