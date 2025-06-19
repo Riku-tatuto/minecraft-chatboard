@@ -1,52 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Minecraft掲示板</title>
+    <title>マインクラフト掲示板</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="menu-bar">
-            <div class="logo">🎮 Minecraft Forum</div>
-            <nav class="categories">
-                <a href="#">バニラ</a>
-                <a href="#">マルチ募集</a>
-                <a href="#">レッドストーン</a>
-                <div class="dropdown">
-                    <a>プラグイン/mod</a>
-                    <div class="dropdown-content">
-                        <a href="#">プラグイン</a>
-                        <a href="#">mod</a>
-                    </div>
-                </div>
-                <a href="#">コマンド</a>
-            </nav>
-            <div class="user-menu">
-                <span id="user-name">ゲスト</span>
+    <!-- メニューバー -->
+    <nav class="navbar">
+        <div class="logo">Minecraft Forum</div>
+        <div class="menu">
+            <a href="#">バニラ</a>
+            <a href="#">マルチ募集</a>
+            <a href="#" class="dropdown">プラグイン/mod関連 ▼
                 <div class="dropdown-content">
-                    <a href="#">パスワード変更</a>
-                    <a href="#">ユーザー名変更</a>
-                    <a href="#">ログアウト</a>
+                    <a href="#">プラグイン関連</a>
+                    <a href="#">mod関連</a>
                 </div>
+            </a>
+            <a href="#">レッドストーン関連</a>
+            <a href="#">コマンド関連</a>
+        </div>
+        <div class="user-menu">
+            <span id="username">ゲスト</span> ▼
+            <div class="dropdown-content">
+                <a href="#">パスワード変更</a>
+                <a href="#">ユーザー名変更</a>
+                <a href="#">ログアウト</a>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <div class="category-grid">
-            <div class="category-card">バニラ <span class="count">(0)</span></div>
-            <div class="category-card">マルチ募集 <span class="count">(0)</span></div>
-            <div class="category-card">レッドストーン <span class="count">(0)</span></div>
-            <div class="category-card">プラグイン <span class="count">(0)</span></div>
-            <div class="category-card">mod <span class="count">(0)</span></div>
-            <div class="category-card">コマンド <span class="count">(0)</span></div>
-        </div>
-    </main>
+    <!-- カテゴリボタン -->
+    <div class="home-buttons">
+        <a href="chat.html?category=vanilla">バニラ</a>
+        <a href="chat.html?category=multi">マルチ募集</a>
+        <a href="chat.html?category=redstone">レッドストーン関連</a>
+        <a href="chat.html?category=plugin">プラグイン関連</a>
+        <a href="chat.html?category=mod">mod関連</a>
+        <a href="chat.html?category=command">コマンド関連</a>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script> 
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script> 
     <script src="firebase-config.js"></script>
-    <script src="auth.js"></script>
+    <script>
+        // ユーザー認証状態の監視
+        firebase.auth().onAuthStateChanged(user => {
+            const usernameEl = document.getElementById('username');
+            if (user) {
+                usernameEl.textContent = user.displayName || 'ゲスト';
+            }
+        });
+    </script>
 </body>
 </html>
