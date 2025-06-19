@@ -1,4 +1,4 @@
-// Firebaseのプロジェクト設定から取得
+// Firebaseプロジェクトの設定をここに記載
 const firebaseConfig = {
   apiKey: "AIzaSyCQdnFMnR4UKZRjTYJYgM98StDklLssZOA",
   authDomain: "online-chat-app-db.firebaseapp.com",
@@ -11,5 +11,7 @@ const firebaseConfig = {
 
 // Firebase初期化
 firebase.initializeApp(firebaseConfig);
+
+// 使用するサービス
 const auth = firebase.auth();
 const database = firebase.database();
